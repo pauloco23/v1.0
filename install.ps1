@@ -11,6 +11,7 @@ if (!(Test-Path $dest)) { New-Item -ItemType Directory -Path $dest | Out-Null }
 # Descargar archivos
 Write-Host "  Downloading files..." -ForegroundColor Gray
 Invoke-WebRequest -Uri "$repo/loader.py"  -OutFile "$dest\loader.py"
+Invoke-WebRequest -Uri "$repo/runpe.py"   -OutFile "$dest\runpe.py"
 Invoke-WebRequest -Uri "$repo/logo.png"   -OutFile "$dest\logo.png"
 
 # Verificar Python
